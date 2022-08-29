@@ -27,6 +27,7 @@ public:
 	float dir;
 	float pos[2];
 	Global();
+	float r,b,g;
 } g;
 
 class X11_wrapper {
@@ -83,9 +84,13 @@ Global::Global()
 	xres = 400;
 	yres = 200;
 	w = 20.0f;
-	dir = 25.0f;
+	dir =25.0f;
 	pos[0] = 0.0f + w;
-	pos[1] = g.yres/2.0f;
+	pos[1] = yres/2.0f;
+
+	r = 200;
+	b= 200;
+	g = 0;
 }
 
 X11_wrapper::~X11_wrapper()
@@ -258,6 +263,10 @@ void physics()
 		g.pos[0] = g.w;
 		g.dir = -g.dir;
 		}	
+	if (g.pos[0] > g.xres){
+	    g.w= 0.0;
+	}
+
 }
 
 void render()
@@ -266,7 +275,21 @@ void render()
 	glClear(GL_COLOR_BUFFER_BIT);
 	//Draw box.
 	glPushMatrix();
-	glColor3ub(150, 160, 220);
+
+	if ( g.pos[0] <= g.xres/4.0 || (g.pos[0] >= (g.xres-(g.xres/4)))) {
+		glColor3f(100, 0,0);
+	}
+	else if (g.pos[0] == g.xres-20.0 || g.pos[0] == 20) {
+	    glColor3f(g.r,0,0);
+	}
+
+	else if ( g.pos[0] == 0 || g.pos[0] == g.xres){
+	    glColor3f(g.r,0,0);
+	}
+	else {
+		glColor3f(0,0,g.b);
+	}
+
 	glTranslatef(g.pos[0],g. pos[1], 0.0f);
 	glBegin(GL_QUADS);
 		glVertex2f(-g.w, -g.w);
