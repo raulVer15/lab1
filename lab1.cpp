@@ -263,8 +263,8 @@ void physics()
 		g.pos[0] = g.w;
 		g.dir = -g.dir;
 		}	
-	if (g.pos[0] > g.xres){
-	    g.w= 0.0;
+	if (g.xres < g.w){
+	    g.pos[0] = 1000;
 	}
 
 }
@@ -276,8 +276,8 @@ void render()
 	//Draw box.
 	glPushMatrix();
 
-	if ( g.pos[0] <= g.xres/4.0 || (g.pos[0] >= (g.xres-(g.xres/4)))) {
-		glColor3f(100, 0,0);
+	if ( g.pos[0] <= g.xres/6.0 || (g.pos[0] >= (g.xres-(g.xres/6.0)))) {
+		glColor3f(g.r, 0,0);
 	}
 	else if (g.pos[0] == g.xres-20.0 || g.pos[0] == 20) {
 	    glColor3f(g.r,0,0);
@@ -289,6 +289,7 @@ void render()
 	else {
 		glColor3f(0,0,g.b);
 	}
+
 
 	glTranslatef(g.pos[0],g. pos[1], 0.0f);
 	glBegin(GL_QUADS);
